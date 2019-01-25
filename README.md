@@ -13,10 +13,10 @@ C++ program to view a DICOM series or NIfTI image using VTK
 2. Build with CMake and your favorite compiler.
 3. Run the executable that is generated in the bin\Debug folder from the command line
     ```
-    mdsc689_03_assignment_01.exe <PATH_TO_DICOM_FOLDER>
+    myImageViewer.exe <PATH_TO_DICOM_FOLDER>
     ```
     OR:
 
     ```
-    mdsc689_03_assignment_01.exe <NIfTI_IMAGE_FILE>.nii
+    myImageViewer.exe <NIfTI_IMAGE_FILE>.nii
     ```
