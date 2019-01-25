@@ -6,6 +6,8 @@ void myInteractorStyler::setImageViewer( vtkImageViewer2* imageViewer )
     minSlice = imageViewer->GetSliceMin();
     maxSlice = imageViewer->GetSliceMax();
     windowLevel = imageViewer->GetWindowLevel()->GetLevel();
+    
+    // Start current slice at 0
     slice = minSlice;
 }
 
@@ -24,8 +26,13 @@ void myInteractorStyler::moveSliceForward()
     if ( slice < maxSlice ) 
     {
         slice += 1;
+
         _ImageViewer->SetSlice( slice );
+
+        // Create the message to be displayed.
         std::string msg = ImageMessage::sliceNumberFormat( slice, maxSlice );
+
+        // Update the mapper and render.
         _SliceStatusMapper->SetInput( msg.c_str() );
         _ImageViewer->Render();
     }
@@ -39,9 +46,10 @@ void myInteractorStyler::moveSliceBackward()
 
         _ImageViewer->SetSlice( slice );
 
-        // Create the message to be displayed
+        // Create the message to be displayed.
         std::string msg = ImageMessage::sliceNumberFormat( slice, maxSlice );
 
+        // Update the mapper and render.
         _SliceStatusMapper->SetInput( msg.c_str() );
         _ImageViewer->Render();
     }
@@ -53,9 +61,10 @@ void myInteractorStyler::moveWindowLevelForward()
 
     _ImageViewer->GetWindowLevel()->SetLevel(windowLevel);
 
-    // Create the message to be displayed
+    // Create the message to be displayed.
     std::string msg = ImageMessage::windowLevelFormat( int(windowLevel) );
 
+    // Update the mapper and render.
     _WindowLevelStatusMapper->SetInput( msg.c_str() );
     _ImageViewer->Render();
 }
@@ -66,9 +75,10 @@ void myInteractorStyler::moveWindowLevelBackward()
 
     _ImageViewer->GetWindowLevel()->SetLevel(windowLevel);
 
-    // Create the message to be displayed
+    // Create the message to be displayed.
     std::string msg = ImageMessage::windowLevelFormat( int(windowLevel) );
 
+    // Update the mapper and render.
     _WindowLevelStatusMapper->SetInput( msg.c_str() );
     _ImageViewer->Render();
 }
