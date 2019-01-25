@@ -1,3 +1,13 @@
+/************************************************************************************************
+*   myImageViewer.cxx
+*
+*   Created by:     Michael Kuczynski
+*   Created on:     19/01/2019
+*   Description:    VTK based program to display DICOM or NIfTI images.
+*                   Allows for adjustment of zoom, window, window level, 
+*                   and slice number.
+************************************************************************************************/
+
 #include "interactorStyler.hxx"
 
 vtkStandardNewMacro(myInteractorStyler);

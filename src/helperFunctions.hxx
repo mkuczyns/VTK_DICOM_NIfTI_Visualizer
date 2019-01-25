@@ -1,3 +1,12 @@
+/****************************************************************************
+*   helperFunctions.hxx
+*
+*   Created by:     Michael Kuczynski
+*   Created on:     19/01/2019
+*   Description:    Definition of additional classes and functions
+*                   used by the main program.
+****************************************************************************/
+
 #ifndef HELPERFUNCTIONS_H
 #define HELPERFUNCTIONS_H
 

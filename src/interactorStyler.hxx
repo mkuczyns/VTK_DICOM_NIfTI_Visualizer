@@ -1,3 +1,11 @@
+/****************************************************************************
+*   interactorStyler.hxx
+*
+*   Created by:     Michael Kuczynski
+*   Created on:     19/01/2019
+*   Description:    Custom interactor styling definition.
+****************************************************************************/
+
 #ifndef INTERACTORSTYLER_H
 #define INTERACTORSTYLER_H
 
