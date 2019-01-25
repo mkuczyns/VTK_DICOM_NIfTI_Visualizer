@@ -5,7 +5,7 @@ C++ program to view a DICOM series or NIfTI image using VTK
 1. Displays a DICOM series or NIfTI image.
 2. Scrolling through slices with the UP/DOWN arrow keys. Scrolling is also available with the mouse wheel.
 3. Adjust the window level with the LEFT/RIGHT arrow keys.
-4. Adjust the window of the image with the Q and A keys (Q = increase window, A = decrease window).
+4. Adjust the window of the image with the Z and X keys (Z = increase window, X = decrease window).
 5. Zoom in or out of the current slice by clicking with the left mouse button and dragging up/down.
 
 ## How-to Run:
