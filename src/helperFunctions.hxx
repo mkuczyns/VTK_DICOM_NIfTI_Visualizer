@@ -30,6 +30,15 @@ class ImageMessage
         *   @returns A string steam with the window level message
         */
         static std::string windowLevelFormat( int windowLevel );
+
+        /*
+        *   Create a message that shows the current window.
+        *
+        *   @param   window   The current window
+        *
+        *   @returns A string steam with the window message
+        */
+        static std::string windowFormat( int window );
 };
 
 /************************* Other helper functions **************************/

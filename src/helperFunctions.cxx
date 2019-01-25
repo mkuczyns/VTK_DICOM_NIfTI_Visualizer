@@ -14,6 +14,13 @@ std::string ImageMessage::windowLevelFormat( int windowLevel )
     tmp << "Window Level:  " << windowLevel;
     return tmp.str();
 }
+
+std::string ImageMessage::windowFormat( int window ) 
+{
+    std::stringstream tmp;
+    tmp << "Window:  " << window;
+    return tmp.str();
+}
 /***************************************************************************/
 
 /************************* Other helper functions **************************/

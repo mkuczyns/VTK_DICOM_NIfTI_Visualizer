@@ -6,6 +6,7 @@ void myInteractorStyler::setImageViewer( vtkImageViewer2* imageViewer )
     minSlice = imageViewer->GetSliceMin();
     maxSlice = imageViewer->GetSliceMax();
     windowLevel = imageViewer->GetWindowLevel()->GetLevel();
+    window = imageViewer->GetWindowLevel()->GetWindow();
     
     // Start current slice at 0
     slice = minSlice;
@@ -19,6 +20,11 @@ void myInteractorStyler::setSliceStatusMapper( vtkTextMapper* statusMapper )
 void myInteractorStyler::setWindowLevelStatusMapper( vtkTextMapper* statusMapper ) 
 {
     _WindowLevelStatusMapper = statusMapper;
+}
+
+void myInteractorStyler::setWindowStatusMapper( vtkTextMapper* statusMapper ) 
+{
+    _WindowStatusMapper = statusMapper;
 }
 
 void myInteractorStyler::moveSliceForward() 
@@ -57,12 +63,12 @@ void myInteractorStyler::moveSliceBackward()
 
 void myInteractorStyler::moveWindowLevelForward() 
 {
-    windowLevel += 1;
+    windowLevel += 5;
 
-    _ImageViewer->GetWindowLevel()->SetLevel(windowLevel);
+    _ImageViewer->GetWindowLevel()->SetLevel( windowLevel );
 
     // Create the message to be displayed.
-    std::string msg = ImageMessage::windowLevelFormat( int(windowLevel) );
+    std::string msg = ImageMessage::windowLevelFormat( int( windowLevel ) );
 
     // Update the mapper and render.
     _WindowLevelStatusMapper->SetInput( msg.c_str() );
@@ -71,14 +77,42 @@ void myInteractorStyler::moveWindowLevelForward()
 
 void myInteractorStyler::moveWindowLevelBackward() 
 {
-    windowLevel -= 1;
+    windowLevel -= 5;
 
-    _ImageViewer->GetWindowLevel()->SetLevel(windowLevel);
+    _ImageViewer->GetWindowLevel()->SetLevel( windowLevel );
 
     // Create the message to be displayed.
-    std::string msg = ImageMessage::windowLevelFormat( int(windowLevel) );
+    std::string msg = ImageMessage::windowLevelFormat( int( windowLevel ) );
 
     // Update the mapper and render.
     _WindowLevelStatusMapper->SetInput( msg.c_str() );
     _ImageViewer->Render();
+}
+
+void myInteractorStyler::moveWindowForward()
+{
+    window += 5;
+
+    _ImageViewer->GetWindowLevel()->SetWindow( window );
+
+    // Create the message to be displayed.
+    std::string msg = ImageMessage::windowFormat( int( window ) );
+
+    // Update the mapper and render.
+    _WindowStatusMapper->SetInput( msg.c_str() );
+    _ImageViewer->Render();
+}
+
+void myInteractorStyler::moveWindowBackward()
+{
+    window -= 5;
+
+    _ImageViewer->GetWindowLevel()->SetWindow( window );
+
+    // Create the message to be displayed.
+    std::string msg = ImageMessage::windowFormat( int( window ) );
+
+    // Update the mapper and render.
+    _WindowStatusMapper->SetInput( msg.c_str() );
+    _ImageViewer->Render();   
 }

@@ -43,25 +43,34 @@ public:
    /*
    *   Set the class status mapper for the slice message.
    *
-   *   @param   imageViewer   Mapper from main for the slice message
+   *   @param   _SliceStatusMapper   Mapper from main for the slice message
    */
    void setSliceStatusMapper(vtkTextMapper* _SliceStatusMapper);
 
    /*
    *   Set the class status mapper for the window level message.
    *
-   *   @param   imageViewer   Mapper from main for the window level message
+   *   @param   _WindowLevelStatusMapper   Mapper from main for the window level message
    */
    void setWindowLevelStatusMapper(vtkTextMapper* _WindowLevelStatusMapper);
+
+   /*
+   *   Set the class status mapper for the window message.
+   *
+   *   @param   _WindowStatusMapper   Mapper from main for the window message
+   */
+   void setWindowStatusMapper(vtkTextMapper* _WindowStatusMapper);
 
 protected:
    vtkImageViewer2* _ImageViewer;
    vtkTextMapper*   _SliceStatusMapper;
    vtkTextMapper*   _WindowLevelStatusMapper;
+   vtkTextMapper*   _WindowStatusMapper;
    int slice;
    int minSlice;
    int maxSlice;
    double windowLevel;
+   double window;
 
    /*
    *   Move the next slice in the image.
@@ -84,11 +93,23 @@ protected:
    void moveWindowLevelBackward();
 
    /*
+   *   Increase the window.
+   */
+   void moveWindowForward();
+
+   /*
+   *   Decrease the window.
+   */
+   void moveWindowBackward();
+
+   /*
    *   Overload the default interactor event listener for key presses.
    *   UP ARROW key    = move to next slice
    *   DOWN ARROW key  = move to previous slice
    *   LEFT ARROW key  = increase window level
    *   RIGHT ARROW key = decrease window level
+   *   Q Key           = increase window
+   *   A key           = decrease window
    */
    virtual void OnKeyDown()
    {
@@ -109,6 +130,14 @@ protected:
       else if ( key.compare("Right") == 0 )
       {
          moveWindowLevelBackward();
+      }
+      else if ( key.compare("z") == 0 )
+      {
+         moveWindowForward();
+      }
+      else if ( key.compare("x") == 0 )
+      {
+         moveWindowBackward();
       }
 
       vtkInteractorStyleImage::OnKeyDown();

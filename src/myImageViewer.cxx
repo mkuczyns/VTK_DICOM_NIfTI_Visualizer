@@ -92,7 +92,11 @@ int main(int argc, char* argv[])
     WindowLevelTextProperty->SetFontFamilyToTimes();
     WindowLevelTextProperty->SetFontSize(18);
 
-    // Create the text mappers for both slice number and window level. Use a helper class "ImageMessage" for this.
+    vtkSmartPointer<vtkTextProperty> WindowTextProperty = vtkSmartPointer<vtkTextProperty>::New();
+    WindowTextProperty->SetFontFamilyToTimes();
+    WindowTextProperty->SetFontSize(18);
+
+    // Create the text mappers for both slice number, window level, and window. Use a helper class "ImageMessage" for this.
     vtkSmartPointer<vtkTextMapper> sliceTextMapper = vtkSmartPointer<vtkTextMapper>::New();
     std::string sliceMessage = ImageMessage::sliceNumberFormat( imageViewer->GetSliceMin(), imageViewer->GetSliceMax() );
     sliceTextMapper->SetInput( sliceMessage.c_str() );
@@ -103,6 +107,12 @@ int main(int argc, char* argv[])
     WindowLevelTextMapper->SetInput( windowLevelMessage.c_str() );
     WindowLevelTextMapper->SetTextProperty( WindowLevelTextProperty );
 
+    imageViewer->GetWindowLevel()->SetWindow(500);
+    vtkSmartPointer<vtkTextMapper> WindowTextMapper = vtkSmartPointer<vtkTextMapper>::New();
+    std::string windowMessage = ImageMessage::windowFormat( int( imageViewer->GetWindowLevel()->GetWindow() ) );
+    WindowTextMapper->SetInput( windowMessage.c_str() );
+    WindowTextMapper->SetTextProperty( WindowTextProperty );
+
     // Create the actors for each message.
     vtkSmartPointer<vtkActor2D> sliceTextActor = vtkSmartPointer<vtkActor2D>::New();
     sliceTextActor->SetMapper( sliceTextMapper );
@@ -110,12 +120,18 @@ int main(int argc, char* argv[])
     vtkSmartPointer<vtkActor2D> windowLevelTextActor = vtkSmartPointer<vtkActor2D>::New();
     windowLevelTextActor->SetMapper( WindowLevelTextMapper );
 
+    vtkSmartPointer<vtkActor2D> windowTextActor = vtkSmartPointer<vtkActor2D>::New();
+    windowTextActor->SetMapper( WindowTextMapper );
+
     // Specify the position of each message to be in the top left corner of the display.
     sliceTextActor->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
     sliceTextActor->GetPositionCoordinate()->SetValue( 0.05, 0.95);
 
     windowLevelTextActor->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
     windowLevelTextActor->GetPositionCoordinate()->SetValue( 0.05, 0.90);
+
+    windowTextActor->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
+    windowTextActor->GetPositionCoordinate()->SetValue( 0.05, 0.85);
 
     // Create an interactor to catch mouse and keyboard events.
     vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
@@ -125,6 +141,7 @@ int main(int argc, char* argv[])
     interactorStyle->setImageViewer( imageViewer );
     interactorStyle->setSliceStatusMapper( sliceTextMapper );
     interactorStyle->setWindowLevelStatusMapper( WindowLevelTextMapper );
+    interactorStyle->setWindowStatusMapper( WindowTextMapper );
 
     // Set the interactor to use the custom interactor style (override the default style).
     imageViewer->SetupInteractor( renderWindowInteractor );
@@ -134,6 +151,7 @@ int main(int argc, char* argv[])
     // Send the current slice message and window level message to the renderer.
     imageViewer->GetRenderer()->AddActor2D( sliceTextActor );
     imageViewer->GetRenderer()->AddActor2D( windowLevelTextActor );
+    imageViewer->GetRenderer()->AddActor2D( windowTextActor );
 
     // Set the window size to the current monitor size.
     imageViewer->GetRenderWindow()->SetSize( imageViewer->GetRenderWindow()->GetScreenSize() );
